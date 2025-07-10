@@ -1,0 +1,120 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    var registeredMessage = TempData["RegisterUserId"] as string;
+    var registerFailedMessage = ViewData["RegisterFailed"] as string;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register - @ViewData["Title"]</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body{
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            height: 100vh;
+             display: flex;
+             align-items: center;
+              justify-content: center;
+             font-family: 'Segoe UI', sans-serif;
+            }
+     </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <div class="card shadow-lg border-0 rounded-3">
+                    @if (!string.IsNullOrEmpty(registeredMessage))
+                    {
+                        <div class="card-header text-green text-center">
+                            <h6 class="mb-0">@registeredMessage</h6>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(registerFailedMessage))
+                    {
+                        <div class="card-header text-danger text-center">
+                            <h6 class="mb-0">@registerFailedMessage</h6>
+                        </div>
+                    }
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3 class="mb-0">User Registration</h3>
+                    </div>
+                    <div class="card-body p-4">
+
+                        <form asp-action="Register" method="post">
+                            <div class="mb-3">
+                                <label asp-for="UserName" class="form-label fw-bold"></label>
+                                <input asp-for="UserName" class="form-control"/>
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="UserEmail" class="form-label fw-bold"></label>
+                                <input asp-for="UserEmail" class="form-control"/>
+                                <span asp-validation-for="UserEmail" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label fw-bold"></label>
+                                <input asp-for="Password" class="form-control"/>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="ConfirmPassword" class="form-label fw-bold"></label>
+                                <input asp-for="ConfirmPassword" class="form-control"/>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="RoleId" class="form-label fw-bold"></label>
+                                <select asp-for="RoleId" asp-items="@(new SelectList(Model.Roles, "RollId", "RoleName"))" class="form-select">
+                                    <option value="">-- Select Role --</option>
+                                </select>
+                                <span asp-validation-for="RoleId" class="text-danger"></span>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <span>Already have an account?</span>
+                            <a asp-action="Login" class="btn btn-link">Login in</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Bundle (includes Popper) -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ✅ Your custom JS -->
+    <script src="~/js/site.js"></script>
+
+    <!-- ✅ Test jQuery working -->
+    <script>
+        $(document).ready(function () {
+            $("#btnClick").on("click", function () {
+                alert("jQuery is working!");
+            });
+        });
+    </script>
+</body>
+</html>
+
+@* 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@
