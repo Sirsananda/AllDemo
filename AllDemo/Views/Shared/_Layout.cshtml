@@ -37,18 +37,48 @@
 </head>
 <body>
 
-    <!-- Top Navbar -->
+    <!-- Top Navbar with Dropdowns -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Admin" >Admin Dashboard</a>
+            <a class="navbar-brand" asp-action="Index" asp-controller="Admin">Admin Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="users.html">Users</a></li>
-                    <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+                    <!-- Simple Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Index" asp-controller="Admin">Dashboard</a>
+                    </li>
+
+                    <!-- Dropdown Menu: Users -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Users
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">User List</a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">Add New User</a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">Manage Roles</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Dropdown Menu: Settings -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Settings
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">Add Role</a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">System Settings</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Simple Link -->
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Logout" asp-controller="Account">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -62,12 +92,13 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p class="mb-0">&copy; 2025 Admin Dashboard | Your Company</p>
+            <p class="mb-0">&copy; 2025 Admin Dashboard | Powered by Sirsananda</p>
         </div>
     </footer>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
 
 

@@ -27,6 +27,7 @@ namespace AllDemo.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
@@ -100,6 +101,7 @@ namespace AllDemo.Controllers
             return View(model);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             try
@@ -152,6 +154,20 @@ namespace AllDemo.Controllers
                 return View(registerViewModel);
             }
             
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login","Account");
         }
     }
 }
