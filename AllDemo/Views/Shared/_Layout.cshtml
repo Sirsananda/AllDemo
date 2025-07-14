@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>AllDemo - @ViewData["Title"]</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         :root {
@@ -70,7 +70,7 @@
                             Settings
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">Add Role</a></li>
+                            <li><a class="dropdown-item" asp-action="AddRole" asp-controller="Admin">Add Role</a></li>
                             <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">System Settings</a></li>
                         </ul>
                     </li>
@@ -95,6 +95,7 @@
             <p class="mb-0">&copy; 2025 Admin Dashboard | Powered by Sirsananda</p>
         </div>
     </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

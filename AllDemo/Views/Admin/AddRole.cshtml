@@ -1,0 +1,47 @@
+﻿@model RoleModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "AddRole";
+    var registeredSuccessMessage = TempData["AddRoleSuccess"] as string;
+    var registerFailedMessage = TempData["AddRoleFailed"] as string;
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+@if (!string.IsNullOrEmpty(registeredSuccessMessage))
+{
+    <div class="col-md-6 card-header text-green text-center">
+        <h6 class="mb-0">@registeredSuccessMessage</h6>
+    </div>
+}
+@if (!string.IsNullOrEmpty(registerFailedMessage))
+{
+    <div class="col-md-6 card-header text-danger text-center">
+        <h6 class="mb-0">@registerFailedMessage</h6>
+    </div>
+}
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label asp-for="RoleName" class="form-label fw-bold"></label>
+            <input asp-for="RoleName" class="form-control" autocomplete="false"/>
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 d-flex" style="margin-top:42px">
+            <button type="submit" class="btn btn-primary  me-2" style="height:45px;">Submit</button>
+            <button type="button" class="btn btn-secondary" style="height:45px;" id="btnReset">Reset</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#btnReset").on("click", function () {
+                window.location.href = '@Url.Action("AddRole", "Admin")';
+            });
+        });
+    </script>
+}
+
+
