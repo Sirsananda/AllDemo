@@ -64,24 +64,14 @@ namespace AllDemo.Controllers
             var claims = new List<Claim>
             {
                  new Claim(ClaimTypes.Name, user.UserName),
+                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                  new Claim(ClaimTypes.Email, user.UserEmail),
-                 new Claim(ClaimTypes.Role, roleType.RoleName),
-                 new Claim("UserId", user.UserId.ToString())
+                 new Claim(ClaimTypes.Role, roleType.RoleName)//added role claim here, means this is going to return role type called ADMIN,SUPERADMIN,TEACHER etc
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(claimsIdentity);
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                principal,
-                new AuthenticationProperties
-                {
-                    IsPersistent = true,//change this true value to the UI Remember Me checkbox value
-                    ExpiresUtc = true //change this true value to the UI Remember Me checkbox value
-                        ? DateTime.UtcNow.AddDays(30)
-                        : DateTime.UtcNow.AddHours(1)
-                });
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             // ✅ Redirect based on role
             if (roleType.RoleName.ToLower() == "admin")

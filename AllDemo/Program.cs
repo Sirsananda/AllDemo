@@ -1,5 +1,7 @@
+using AllDemo.Configuration;
 using AllDemo.Data;
 using AllDemo.Helper.Log;
+using AllDemo.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +12,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ErrorLog>();
-
+builder.Services.AddScoped<OTPService>();
 //Configure EF Core with SQL server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));
@@ -24,6 +26,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.SlidingExpiration = true;
 });
 builder.Services.AddAuthorization();//Authorization services are added
+builder.Services.Configure<OTPSetting>(builder.Configuration.GetSection("OtpSettings"));//this is used because of get the otp digit number from the appsettings.json file
 
 var app = builder.Build();
 

@@ -1,30 +1,38 @@
-﻿@model RoleModel
+﻿@model RoleViewModel
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "AddRole";
+    ViewData["Title"] = "Create Role";
     var registeredSuccessMessage = TempData["AddRoleSuccess"] as string;
     var registerFailedMessage = TempData["AddRoleFailed"] as string;
+    var updateRoleMessage = TempData["UpdateRole"] as string;
 }
 
-<h2 class="mb-4">@ViewData["Title"]</h2>
+<h3 class="mb-4">@ViewData["Title"]</h3>
 @if (!string.IsNullOrEmpty(registeredSuccessMessage))
 {
-    <div class="col-md-6 card-header text-green text-center">
-        <h6 class="mb-0">@registeredSuccessMessage</h6>
+    <div class="display-message col-md-6 card-header text-green text-center">
+        <h6 class="mb-0">@Html.Encode(registeredSuccessMessage) </h6>
     </div>
 }
 @if (!string.IsNullOrEmpty(registerFailedMessage))
 {
-    <div class="col-md-6 card-header text-danger text-center">
-        <h6 class="mb-0">@registerFailedMessage</h6>
+    <div class="display-message col-md-6 card-header text-danger text-center">
+        <h6 class="mb-0">@Html.Encode(registerFailedMessage)</h6>
+    </div>
+}
+@if (!string.IsNullOrEmpty(updateRoleMessage))
+{
+    <div class="display-message col-md-6 card-header text-danger text-center">
+        <h6 class="mb-0">@Html.Encode(updateRoleMessage)</h6>
     </div>
 }
 <form method="post">
+    @Html.AntiForgeryToken() <!--CSRF token-->
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
     <div class="row g-3">
         <div class="col-md-3">
             <label asp-for="RoleName" class="form-label fw-bold"></label>
-            <input asp-for="RoleName" class="form-control" autocomplete="false"/>
+            <input asp-for="RoleName" class="form-control" autocomplete="off"/>
             <span asp-validation-for="RoleName" class="text-danger"></span>
         </div>
         <div class="col-md-6 d-flex" style="margin-top:42px">
@@ -33,6 +41,41 @@
         </div>
     </div>
 </form>
+<hr>
+@if (Model.RoleList == null)
+{
+    <h3>No Roles Found!</h3>
+}
+else
+{
+    <h3>All Roles</h3>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+           
+            <th>Role Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var role in Model.RoleList)
+        {
+            <tr>
+                
+                <td>@role.RoleName</td>
+                <td>
+                    <a asp-action="EditRole" asp-route-id="@role.RollId" class="btn btn-warning btn-sm">Edit</a>
+
+                    <form asp-action="" asp-route-id="@role.RollId" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure to delete this role?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
 
 @section Scripts {
     <script>
@@ -40,7 +83,11 @@
             $("#btnReset").on("click", function () {
                 window.location.href = '@Url.Action("AddRole", "Admin")';
             });
+
+            
         });
+
+        
     </script>
 }
 

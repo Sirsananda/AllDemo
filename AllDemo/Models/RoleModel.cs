@@ -9,8 +9,7 @@ namespace AllDemo.Models
         [Key]
         public int? RollId { get; set; }
 
-        [Required(ErrorMessage = "Role Name is Required")]
-        [Display(Name="Role Name",Prompt = "Enter Role Name")]
+        [Required]
         public string RoleName { get; set; }
     }
 }
