@@ -13,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ErrorLog>();
 builder.Services.AddScoped<OTPService>();
+builder.Services.AddScoped<EmailService>();
+
 //Configure EF Core with SQL server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));
@@ -27,6 +29,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 builder.Services.AddAuthorization();//Authorization services are added
 builder.Services.Configure<OTPSetting>(builder.Configuration.GetSection("OtpSettings"));//this is used because of get the otp digit number from the appsettings.json file
+builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("EmailSettings"));//EmailSettings: this is appsettings configuration name, and this is to get the value from the appsetting.json file and store in the  MailSetting class
 
 var app = builder.Build();
 

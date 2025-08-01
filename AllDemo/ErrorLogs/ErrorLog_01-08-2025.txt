@@ -1,0 +1,99 @@
+
+-------------------------ErrorLog Start------------------- as on 12:50:50
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. ffacd0b85a97d-3b79c4a6f62sm4770204f8f.73 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, List`1 attachmentPath) in E:\Project\AllDemo\AllDemo\Services\EmailService.cs:line 50
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 13:22:06
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5b1f17b1804b1-4589edf56e0sm55221815e9.1 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, List`1 attachmentPath)
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 14:45:54
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. d9443c01a7336-241d1f21c65sm38673495ad.73 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, List`1 attachmentPath)
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 14:46:02
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. d2e1a72fcca58-76bcce8911asm3599858b3a.36 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, List`1 attachmentPath)
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 14:46:12
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 41be03b00d2f7-b422b7e21adsm3277117a12.26 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, List`1 attachmentPath)
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 15:04:22
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. d9443c01a7336-241e8976faesm38317985ad.90 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, IFormFile singleFile, List`1 multipleFiles)
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 15:07:18
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. d2e1a72fcca58-76bcce8a838sm3670505b3a.32 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, IFormFile singleFile, List`1 multipleFiles)
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 15:20:20
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. d2e1a72fcca58-76bccfea38csm3629134b3a.128 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, IFormFile singleFile, List`1 multipleFiles)
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 15:29:06
+Webpage Name: /Email/SendEmailToUser
+Custom Message :Mail Send failed, Error generate at SendEmail()
+Message :5.7.0 Authentication Required. For more information, go to
+5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 41be03b00d2f7-b422bb1133fsm3387416a12.56 - gsmtp
+ErrorLog Details:    at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at MailKit.Net.Smtp.SmtpClient.SendAsync(FormatOptions options, MimeMessage message, MailboxAddress sender, IList`1 recipients, CancellationToken cancellationToken, ITransferProgress progress)
+   at AllDemo.Services.EmailService.SendEmail(String subject, String bodyMessage, IFormFile singleFile, List`1 multipleFiles) in E:\Project\AllDemo\AllDemo\Services\EmailService.cs:line 59
+-------------------------ErrorLog End-------------------
+

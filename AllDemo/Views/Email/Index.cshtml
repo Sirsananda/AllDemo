@@ -1,0 +1,56 @@
+﻿@model EmailFormViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Send Email";
+    string success = TempData["success"] as string;
+    string failed = TempData["failed"] as string;
+}
+<h3 class="mb-4">@ViewData["Title"]</h3>
+<hr/>
+@if (!string.IsNullOrEmpty(success))
+{
+    <div class="display-message col-md-6 card-header text-success text-center">
+        <h6 class="mb-0">@Html.Encode(success) </h6>
+    </div>
+}
+@if (!string.IsNullOrEmpty(failed))
+{
+    <div class="display-message col-md-6 card-header text-danger text-center">
+        <h6 class="mb-0">@Html.Encode(failed)</h6>
+    </div>
+}
+
+<form asp-action="SendEmailToUser" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken() <!--CSRF token-->
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="col g-3">
+        <div class="col-md-3">
+            <label asp-for="Subject" class="form-label fw-bold"></label>
+            <select asp-for="Subject" class="form-select">
+                <option value="">-- Select Subject --</option>
+                <option value="First Subject">First Subject</option>
+                <option value="Second Subject">Second Subject</option>
+                <option value="Third Subject">Third Subject</option>
+            </select>
+            <span asp-validation-for="Subject" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="BodyMessage" class="form-label fw-bold"></label>
+            <textarea  asp-for="BodyMessage" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="BodyMessage" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold"> Single Document</label>
+            <input type="file" name="SingleFile" class="form-control" />
+            <span asp-validation-for="SingleFile" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold"> Multiple Document</label>
+            <input type="file" name="MultipleFile" class="form-control" multiple/>
+            <span asp-validation-for="MultipleFile" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 d-flex" style="margin-top:42px">
+            <button type="submit" class="btn btn-primary  me-2" style="height:45px;">Send Mail</button>
+        </div>
+    </div>
+</form>
