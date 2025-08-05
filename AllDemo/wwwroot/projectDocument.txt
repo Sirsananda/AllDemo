@@ -1,0 +1,7 @@
+********* Image reCAPTCHA *********************
+1. first install nuget package called System.Drawing.Common
+2. in the img tag use the src tag to create an image which contain the captcha code
+	src="/Captcha/GenerateImage" :- controller/action_method
+	this controller action method are create an random string and create an image hold with the radom string, 
+3. validate the input with the session string
+

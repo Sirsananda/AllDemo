@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "IMAGE reCAPTCHA";
+}
+<h3 class="mb-4">@ViewData["Title"]</h3>
+<hr />
+<div>
+    <img id="captchaImage" src="/Captcha/GenerateImage" alt="CAPTCHA" style="border:1px solid #ccc;" />
+    <button type="button" id="refreshCaptcha">↻</button>
+</div>
+<input type="text" id="captchaInput" placeholder="Enter CAPTCHA" />
+<button id="submitCaptcha">Submit</button>
+<div id="captchaResult"></div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $("#refreshCaptcha").on('click',function(){
+            $("#captchaImage").attr('src','/Captcha/GenerateImage?ts='+new Date().getTime());//prevent caching
+        })
+
+            $("#submitCaptcha").on('click',function(){
+                    const input=$("#captchaInput").val();
+                    $.ajax({
+                        url:'/Captcha/ValidateImageCaptcha',
+                        type:'POST',
+                        data:{input:input},
+                        success:function(response){
+                            $("#captchaInput").val('');
+                            if(response.success){
+                                $('#captchaResult').text('✅ Correct');
+                            }else{
+                                  $('#captchaResult').text('❌ Incorrect');
+                            }
+                        }
+                    })
+            })
+    </script>
+}

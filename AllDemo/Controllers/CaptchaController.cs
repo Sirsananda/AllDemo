@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace AllDemo.Controllers
@@ -31,6 +33,45 @@ namespace AllDemo.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult ImageReCAPTCHA()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GenerateImage()
+        {
+            int length = _random.Next(4, 9);
+            string captchatext = GenerateRandomText(length);
+            HttpContext.Session.SetString("ImageCaptchaCode",captchatext);
+            var stream = new MemoryStream();
+            using (var bmp = new Bitmap(160, 40)) 
+            using (var gfx = Graphics.FromImage(bmp))
+            using (var font = new Font("Arial", 20, FontStyle.Bold))
+            {
+                gfx.Clear(Color.Navy);
+                gfx.DrawString(captchatext,font,Brushes.White,new PointF(10,5));
+                bmp.Save(stream,ImageFormat.Png);
+            }
+
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "image/png");
+
+        }
+
+        private string GenerateRandomText(int length)
+        {
+            const string chars= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        [HttpPost]
+        public JsonResult ValidateImageCaptcha(string input)
+        {
+            string correctCaptcha = HttpContext.Session.GetString("ImageCaptchaCode");
+            return Json(new { success = input == correctCaptcha });
+        }
     }
 
 }
