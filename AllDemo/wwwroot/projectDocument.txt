@@ -1,4 +1,4 @@
-********* Image reCAPTCHA *********************
+﻿********* Image reCAPTCHA *********************
 1. first install nuget package called System.Drawing.Common
 2. in the img tag use the src tag to create an image which contain the captcha code
 	src="/Captcha/GenerateImage" :- controller/action_method
@@ -13,3 +13,44 @@
 	after post details: 
 	site key: 6LffTpsrAAAAAPecbtDhpraKvP4mkSbFOybNIPrA
     secret key : 6LffTpsrAAAAAOyyHWuuVZlLWm5AH7i4vPwfC5CW
+
+
+	"GoogleReCaptcha": {
+    "SiteKey": "6LffTpsrAAAAAPecbtDhpraKvP4mkSbFOybNIPrA",
+    "SecretKey": "6LffTpsrAAAAAOyyHWuuVZlLWm5AH7i4vPwfC5CW"
+  }  this setting is required at the appsetting.json file 
+
+2.  builder.Services.AddHttpClient();//this service is required to use and configure HttpClient,first use at reCAPTCHA-v2
+	builder.Services.AddScoped<GoogleReCaptchaValidator>(); validator class GoogleReCaptchaValidator are used to validate the recaptcha 
+
+	******* create simple QR code *********************
+	1. install nuget package QRCoder
+	2. controller QR --> Generate is the action method
+		
+		input text box value:
+		1. URL -->	Open a website → https://example.com
+		2. Text --->	Just display plain text
+		3. Email	--> Launches email client → mailto:someone@example.com
+		4. Phone -->	Initiates a phone call → tel:+1234567890
+		5. SMS  -->	Opens SMS app → sms:+1234567890?body=Hello
+
+		6. wifi -->  WIFI:T:WPA;S:MyNetwork;P:mypassword;; // wifi name,if and password
+					example:- WIFI:T:WPA;S:MyNetwork;P:mypassword;;
+					WPA--> is the Type
+					MyNetwork --> is the Network Name
+					mypassword --> Password
+					Geo Location -->	Opens location in maps → geo:20.35,85.81 --> geo:20.35 (north),85.81(west) of dfl cyber city bhubaneswar
+
+		7.calendar --> string calendarData = @"BEGIN:VCALENDAR
+									VERSION:2.0
+									BEGIN:VEVENT
+									SUMMARY:Team Meeting // this is the meeting subject
+									DTSTART:20250807T100000Z //start time
+									DTEND:20250807T110000Z //end time
+									LOCATION:Conference Room A //room or location
+									DESCRIPTION:Quarterly strategy meeting // meeting description
+									END:VEVENT 
+									END:VCALENDAR";
+		8. for app store --> string appUrl = "https://play.google.com/store/apps/details?id=com.example.app";
+
+		9. for social media ---> string linkedInUrl = "https://www.linkedin.com/in/yourprofile/";

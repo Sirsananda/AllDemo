@@ -54,10 +54,23 @@
                     <!-- Dropdown Menu: Users -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Special
+                            OTP,Email,reCAPTCHA
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" asp-action="Index" asp-controller="OTP">OTP Creation</a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Email">Sent Email</a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Captcha">Simple reCAPTCHA</a></li>
+                            <li><a class="dropdown-item" asp-action="ImageReCAPTCHA" asp-controller="Captcha">Image reCAPTCHA</a></li>
+                            <li><a class="dropdown-item" asp-action="reCAPTCHAVTWO" asp-controller="Captcha">reCAPTCHA-v2</a></li>
+                        </ul>
+                    </li>
+                    <!-- Dropdown Menu: Users -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            QR Code
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-action="SimpleQRCode" asp-controller="QR">Simple QRCode</a></li>
                             <li><a class="dropdown-item" asp-action="Index" asp-controller="Email">Sent Email</a></li>
                             <li><a class="dropdown-item" asp-action="Index" asp-controller="Captcha">Simple reCAPTCHA</a></li>
                             <li><a class="dropdown-item" asp-action="ImageReCAPTCHA" asp-controller="Captcha">Image reCAPTCHA</a></li>

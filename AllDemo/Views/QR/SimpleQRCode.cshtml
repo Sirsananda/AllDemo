@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Simple QR Code Generator";
+}
+<h3 class="mb-4">@ViewData["Title"]</h3>
+<hr />
+<div>
+    <input type="text" id="qrText" placeholder="Enter Text"/>
+    <button id="generateBtn">Generate QR</button>
+</div>
+<br/>
+<img id="qrImage" src="" alt="QR Code" style="display:none" />
+@section Scripts
+{
+    <script type="text/javascript">
+        $("#generateBtn").on('click',function(){
+            const text=$("#qrText").val().trim();
+            if(!text){
+                alert('Please Enter text');
+                return;
+            }
+            $.post('/QR/Generate',{text:text},function(response){
+                if(response.success){
+                    $("#qrImage").attr('src',response.image).show();
+                }else{
+                    alert(response.message || 'Failed to generate QR Code');
+                }
+            })
+        })
+    </script>
+}
