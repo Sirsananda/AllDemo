@@ -1,6 +1,7 @@
 using AllDemo.Configuration;
 using AllDemo.Data;
 using AllDemo.Helper.Log;
+using AllDemo.Helper.Validator;
 using AllDemo.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ErrorLog>();
 builder.Services.AddScoped<OTPService>();
 builder.Services.AddScoped<EmailService>();
-
+builder.Services.AddHttpClient();//this service is required to use and configure HttpClient,first use at reCAPTCHA-v2
+builder.Services.AddScoped<GoogleReCaptchaValidator>();
 //Configure EF Core with SQL server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));

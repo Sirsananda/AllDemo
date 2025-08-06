@@ -4,4 +4,12 @@
 	src="/Captcha/GenerateImage" :- controller/action_method
 	this controller action method are create an random string and create an image hold with the radom string, 
 3. validate the input with the session string
+********reCAPTCHA v2 google bot protection **************
+1.  https://www.google.com/recaptcha/admin/create - register from this site and get the site key and secret key
+	Label: My Website
+	reCAPTCHA type : I'm not a robot
+	Domains: Localhost or yourdomainname.com
 
+	after post details: 
+	site key: 6LffTpsrAAAAAPecbtDhpraKvP4mkSbFOybNIPrA
+    secret key : 6LffTpsrAAAAAOyyHWuuVZlLWm5AH7i4vPwfC5CW

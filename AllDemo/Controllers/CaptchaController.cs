@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using AllDemo.Helper.Validator;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -7,6 +8,12 @@ namespace AllDemo.Controllers
 {
     public class CaptchaController : Controller
     {
+        private readonly GoogleReCaptchaValidator _googleReCaptchaValidator;
+
+        public CaptchaController(GoogleReCaptchaValidator googleReCaptchaValidator)
+        {
+            _googleReCaptchaValidator = googleReCaptchaValidator;
+        }
         private readonly Random _random = new();
 
         public IActionResult Index()
@@ -71,6 +78,29 @@ namespace AllDemo.Controllers
         {
             string correctCaptcha = HttpContext.Session.GetString("ImageCaptchaCode");
             return Json(new { success = input == correctCaptcha });
+        }
+
+        [HttpGet]
+        public IActionResult reCAPTCHAVTWO()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> reCAPTCHAVTWO(string username)
+        {
+            string token = Request.Form["g-recaptcha-response"];
+            bool isHuman = await _googleReCaptchaValidator.IsReCaptchaPassedAsync(token);
+
+            if (!isHuman)
+            {
+                ModelState.AddModelError("", "Captcha failed. Please try again.");
+                return View(); // Return form again
+            }
+
+            TempData["reCAPTCHA-v2"] = "CAPTCHA Passed!";
+            // Proceed with form logic
+            return View();
         }
     }
 

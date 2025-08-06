@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "reCAPTCHA-v2";
+    string passMessage = TempData["reCAPTCHA-v2"] as string;
+}
+<h3 class="mb-4">@ViewData["Title"]</h3>
+<hr />
+@if (!string.IsNullOrEmpty(passMessage))
+{
+    <div class="display-message col-md-6 card-header text-success text-center">
+        <h6 class="mb-0">@Html.Encode(passMessage) </h6>
+    </div>
+}
+<form asp-controller="Captcha" asp-action="reCAPTCHAVTWO" method="POST">
+    <input type="text" name="username" placeholder="Enter name" required />
+    <!-- reCAPTCHA Widget -->
+    <div class="g-recaptcha" data-sitekey="6LffTpsrAAAAAPecbtDhpraKvP4mkSbFOybNIPrA"></div>
+    <button type="submit">Submit</button>
+</form>
+
+@section Scripts
+{
+    <!-- Google reCAPTCHA JS -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+}
