@@ -24,7 +24,7 @@
 	builder.Services.AddScoped<GoogleReCaptchaValidator>(); validator class GoogleReCaptchaValidator are used to validate the recaptcha 
 
 	******* create simple QR code *********************
-	1. install nuget package QRCoder
+	1. install nuget package QRCoder --> v1.6.0.0
 	2. controller QR --> Generate is the action method
 		
 		input text box value:
