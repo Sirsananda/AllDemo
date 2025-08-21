@@ -54,3 +54,18 @@
 		8. for app store --> string appUrl = "https://play.google.com/store/apps/details?id=com.example.app";
 
 		9. for social media ---> string linkedInUrl = "https://www.linkedin.com/in/yourprofile/";
+
+		*************** Resize Image **************************************************************
+		1. Preview image using jquery
+			resize that image, 100 * 100
+			find the real width and height
+			find the same image are present in the local directory or not, if present then i have to give an unique name to it.
+			and if i delete the record from  the database then i have to delete the original image from the local directory
+			
+			also check some extension of the image type and also size of the image
+
+			finaly: copy the image to the local directory and save to the database as simple string format and base64 and byte[]
+			these image format are shown or preview in the same razor page
+
+			for that i use a nuget package called 
+			SixLabors.ImageSharp -> 3.1.11

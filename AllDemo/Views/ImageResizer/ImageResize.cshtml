@@ -1,0 +1,103 @@
+﻿@model ImageResizerViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Image Resizer";
+}
+<h3 class="mb-4">@ViewData["Title"]</h3>
+<hr />
+<form asp-action="ImageResize" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="col g-3">
+        <div class="col-md-3">
+            <label asp-for="Image" class="form-label fw-bold"></label>
+            <input type="file" id="image1" name="Image" class="form-control" />
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="ImageByte" class="form-label fw-bold"></label>
+            <input type="file" id="image2" name="ImageByte" class="form-control" />
+            <span asp-validation-for="ImageByte" class="text-danger"></span>
+        </div>
+        <div class="col-md-3" style="margin-top:42px">
+            <input type="submit" class="btn btn-primary" value="Resize" />
+        </div>
+    </div>
+</form>
+<hr />
+<h2>Original Images Preview Here</h2>
+<div style="display:flex">
+    <div class="mt-3">
+        <img id="previewImage1" src="#" alt="Preview will appear here" class="img-thumbnail" style="display:none;" />
+    </div>
+    <div class="mt-3">
+        <img id="previewImage2" src="#" alt="Preview will appear here" class="img-thumbnail" style="display:none;" />
+    </div>
+</div>
+
+
+@if (@Model._AfterResizeImage != null)
+{
+    <hr />
+    <h2>Resized Images Preview</h2>
+    <div style="display: flex; gap: 20px;">
+
+        <!-- Local File -->
+        @if (!string.IsNullOrEmpty(Model?._AfterResizeImage?.LocalDirectoryImage))
+        {
+            <div>
+                <h4>Local Folder</h4>
+                <img src="@Url.Content("~/Image-Resizer/" + System.IO.Path.GetFileName(Model._AfterResizeImage.LocalDirectoryImage))"
+                     alt="Local File"/>
+            </div>
+        }
+
+        <!-- Base64 Image -->
+        @if (!string.IsNullOrEmpty(Model?._AfterResizeImage?.ImageStringBase64))
+        {
+            <div>
+                <h4>Base64 Image</h4>
+                <img src="data:image/png;base64,@Model._AfterResizeImage.ImageStringBase64"
+                     alt="Base64 Image" />
+            </div>
+        }
+        
+
+        <!-- Byte[] Image -->
+    @if (Model?._AfterResizeImage?.ImageByte != null)
+        {
+            <div>
+                <h4>Byte[] Image</h4>
+                <img src="data:image/png;base64,@Convert.ToBase64String(Model._AfterResizeImage.ImageByte)"
+                     alt="Byte Image"/>
+            </div>
+        }
+    </div>
+}
+ 
+@section Scripts
+        {
+    <script type="text/javascript">
+          function previewFile(input, previewId) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#" + previewId)
+                        .attr("src", e.target.result)
+                        .show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function () {
+            $("#image1").change(function () {
+                previewFile(this, "previewImage1");
+            });
+
+            $("#image2").change(function () {
+                previewFile(this, "previewImage2");
+            });
+        });
+    </script>
+        }

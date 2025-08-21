@@ -32,6 +32,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();//Authorization services are added
 builder.Services.Configure<OTPSetting>(builder.Configuration.GetSection("OtpSettings"));//this is used because of get the otp digit number from the appsettings.json file
 builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("EmailSettings"));//EmailSettings: this is appsettings configuration name, and this is to get the value from the appsetting.json file and store in the  MailSetting class
+builder.Services.Configure<ImageSettings>(builder.Configuration.GetSection("ImageSettings"));//here i fetch the setting of file extension, file size
 
 var app = builder.Build();
 
