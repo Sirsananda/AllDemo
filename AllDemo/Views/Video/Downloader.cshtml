@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Video Downloader";
+}
+<h3 class="mb-4">YouTube / Instagram Downloader Demo</h3>
+<hr />
+<div class="col g-3">
+    <div class="col-md-3">
+        <input type="text" id="videoUrl" placeholder="Paste video URL" size="60" />
+        <button id="btnPreview">Preview Qualities</button>
+    </div>
+</div>
+<div id="options"></div>
+<hr/>
+<div>
+    <input type="text" id="instaUrl" placeholder="Paste Instagram URL" size="60" />
+    <button id="btnInstaPreview">Preview</button>
+</div>
+
+<div id="instaOptions"></div>
+@section Scripts
+{
+    <script type="text/javascript">
+           $("#btnPreview").click(function () {
+            var url = $("#videoUrl").val();
+            $.post("/Video/Preview", { url: url }, function (data) {
+                console.log(data);
+                if (data.error) {
+                    $("#options").html("<p>" + data.error + "</p>");
+                    return;
+                }
+
+                var html = "<ul>";
+                data.forEach(function (s) {
+                    html += `<li>
+                        ${s.quality} (${s.format}, ${s.size})
+                        <a href="/Video/Download?url=${encodeURIComponent(s.url)}">Download</a>
+                    </li>`;
+                });
+                html += "</ul>";
+                $("#options").html(html);
+            });
+        });
+
+            $("#btnInstaPreview").click(function () {
+            var url = $("#instaUrl").val();
+            $.post("/Video/InstaPreview", { url: url }, function (data) {
+                if (data.error) {
+                    $("#instaOptions").html("<p>" + data.error + "</p>");
+                    return;
+                }
+
+                var html = "<ul>";
+                data.forEach(function (s) {
+                    html += `<li>
+                        ${s.quality} (${s.format})
+                        <a href="/Video/InstaDownload?url=${encodeURIComponent(s.url)}">Download</a>
+                    </li>`;
+                });
+                html += "</ul>";
+                $("#instaOptions").html(html);
+            });
+        });
+    </script>
+}

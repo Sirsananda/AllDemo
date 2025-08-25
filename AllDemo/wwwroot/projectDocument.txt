@@ -69,3 +69,16 @@
 
 			for that i use a nuget package called 
 			SixLabors.ImageSharp -> 3.1.11
+
+****************************** youtube/instagram video-downloader *********************************************************************
+1. download three nuget package
+dotnet add package YoutubeExplode ->6.5.4
+dotnet add package Xabe.FFmpeg -> v6.0.2
+dotnet add package Xabe.FFmpeg.Downloader  -> v6.0.2
+2. add the services to the program.cs
+
+// Ensure FFmpeg is present in a writable temp/tools folder on server boot
+await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
+FFmpeg.SetExecutablesPath(Path.Combine(Path.GetTempPath(),"FFmpeg"));// Xabe sets this internally too
+
+3. check the page Video/Downloader.cshtml page. 

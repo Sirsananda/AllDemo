@@ -5,6 +5,8 @@ using AllDemo.Helper.Validator;
 using AllDemo.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Xabe.FFmpeg;
+using Xabe.FFmpeg.Downloader;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,11 @@ builder.Services.AddAuthorization();//Authorization services are added
 builder.Services.Configure<OTPSetting>(builder.Configuration.GetSection("OtpSettings"));//this is used because of get the otp digit number from the appsettings.json file
 builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("EmailSettings"));//EmailSettings: this is appsettings configuration name, and this is to get the value from the appsetting.json file and store in the  MailSetting class
 builder.Services.Configure<ImageSettings>(builder.Configuration.GetSection("ImageSettings"));//here i fetch the setting of file extension, file size
+
+// Ensure FFmpeg is present in a writable temp/tools folder on server boot
+await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
+FFmpeg.SetExecutablesPath(Path.Combine(Path.GetTempPath(),"FFmpeg"));// Xabe sets this internally too
+
 
 var app = builder.Build();
 
