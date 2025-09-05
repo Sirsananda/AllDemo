@@ -3,10 +3,24 @@
 @{
     ViewData["Title"] = "AdmissionTypeList";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string deletefailed = ViewBag.ErrorFindID as string;
+    string deletesuccess = TempData["DeleteSuccessAdmissionType"] as string;
 }
 
 <h3>@ViewData["Title"]</h3>
 <a asp-action="GetAdmissionType" asp-controller="Master">Create</a>
+@if (!string.IsNullOrEmpty(deletefailed))
+{
+    <div class="display-message col-md-6 card-header text-danger text-center">
+        <h6 class="mb-0">@Html.Encode(deletefailed) </h6>
+    </div>
+}
+@if (!string.IsNullOrEmpty(deletesuccess))
+{
+    <div class="display-message col-md-6 card-header text-success text-center">
+        <h6 class="mb-0">@Html.Encode(deletesuccess) </h6>
+    </div>
+}
 <hr />
 
 @if (Model != null && Model.Any())
@@ -27,7 +41,7 @@
                 <td>@(item.IsActive ? "Active":"Inactive")</td>
                 <td>
                     <a asp-action="EditAdmissionType" asp-controller="Master" asp-route-id="@item.AdmissionTypeId">Edit</a> |
-                    <a asp-action="" asp-route-id="@item.AdmissionTypeId">Delete</a>
+                    <a asp-action="DeleteAdmissionType" asp-controller="Master" asp-route-id="@item.AdmissionTypeId" attr-admissionType="@item.AdmissionTypeName" class="btnDeleteAdmissionType">Delete</a>
                 </td>
             </tr>
         }
@@ -38,4 +52,22 @@ else
 {
     <p class="text-muted">No admission types found.</p>
     <a asp-action="GetAdmissionType" asp-controller="Master">Create</a>
+}
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".btnDeleteAdmissionType").on('click',function(e){
+                e.preventDefault();//stop immediate navigation
+                const admissionType=$(this).attr("attr-admissionType");
+                const url = $(this).attr("href"); // the delete action URL
+                alert(url);
+                 if (confirm(`Do you want to delete Admission Type: ${admissionType}?`)) {
+                    // Redirect to controller action only if user clicks OK
+                      alert(url);
+                      window.location.href = url;
+                  }
+            })
+        })
+    </script>
 }

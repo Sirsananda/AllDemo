@@ -97,5 +97,24 @@ namespace AllDemo.Controllers
             TempData["UpdateRole"] = "Admission Type Updated Successfully";
             return RedirectToAction("AdmissionTypeList");
         }
+
+        [HttpGet]
+        public IActionResult DeleteAdmissionType(int id)
+        {
+            if (id == null || id == 0)
+            {
+                ViewBag.ErrorFindID = "Please Select Admission Type";
+                return View("AdmissionTypeList");
+            }
+
+            var admissionType =  _appDbContext.AdmissionTypes.Find(id);
+            if (admissionType != null)
+            {
+                _appDbContext.AdmissionTypes.Remove(admissionType);
+                _appDbContext.SaveChangesAsync();
+                TempData["DeleteSuccessAdmissionType"] = "Delete Admission Type :" + admissionType.AdmissionTypeName;
+            }
+            return RedirectToAction("AdmissionTypeList");
+        }
     }
 }
