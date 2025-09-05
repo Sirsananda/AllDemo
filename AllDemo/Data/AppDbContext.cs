@@ -11,5 +11,12 @@ namespace AllDemo.Data
         }
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<RoleModel> RoleModels { get; set; }
+        public DbSet<AdmissionTypeModel> AdmissionTypes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<AdmissionTypeModel>().HasIndex(a => a.AdmissionTypeName).IsUnique();
+        }
     }
 }
