@@ -74,6 +74,15 @@
                             <li><a class="dropdown-item" asp-action="ImageResize" asp-controller="ImageResizer">Image Resizer</a></li>
                         </ul>
                     </li>
+                    <!-- Dropdown Menu: Video -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Video Downloader
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-action="Downloader" asp-controller="Video">Youtube/Instagram Downloader</a></li>
+                        </ul>
+                    </li>
                     <!-- Dropdown Menu: Users -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -93,7 +102,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" asp-action="AddRole" asp-controller="Admin">Add Role</a></li>
-                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Admin">System Settings</a></li>
+                            <li><a class="dropdown-item" asp-action="GetAdmissionType" asp-controller="Master">Admission Type</a></li>
                         </ul>
                     </li>
 

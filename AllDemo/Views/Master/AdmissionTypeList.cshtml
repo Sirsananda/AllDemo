@@ -1,0 +1,41 @@
+﻿@model List<AdmissionTypeModel>
+
+@{
+    ViewData["Title"] = "AdmissionTypeList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>@ViewData["Title"]</h3>
+<a asp-action="GetAdmissionType" asp-controller="Master">Create</a>
+<hr />
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Admission Type</th>
+            <th>IsActive</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AdmissionTypeName</td>
+                <td>@(item.IsActive ? "Active":"Inactive")</td>
+                <td>
+                    <a asp-action="EditAdmissionType" asp-controller="Master" asp-route-id="@item.AdmissionTypeId">Edit</a> |
+                    <a asp-action="" asp-route-id="@item.AdmissionTypeId">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">No admission types found.</p>
+    <a asp-action="GetAdmissionType" asp-controller="Master">Create</a>
+}

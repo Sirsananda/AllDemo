@@ -1,0 +1,46 @@
+﻿@model AdmissionTypeModel
+
+@{
+    ViewData["Title"] = "AdmissionTypes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var success = TempData["AddAdmissionTypeSuccess"] as string;
+}
+
+<h3>Admission Type</h3>
+@if (!string.IsNullOrEmpty(success))
+{
+    <div class="display-message col-md-6 card-header text-success text-center">
+        <h6 class="mb-0">@Html.Encode(success) </h6>
+    </div>
+}
+<hr/>
+<form method="post" asp-action="PostAdmissionType" asp-controller="Master" id="myForm">
+    @Html.AntiForgeryToken() <!--CSRF token-->
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label asp-for="AdmissionTypeName" class="form-label fw-bold"></label> *
+            <input asp-for="AdmissionTypeName" class="form-control" autocomplete="off" />
+            <span asp-validation-for="AdmissionTypeName" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+            <label asp-for="IsActive" class="form-check-label fw-bold">Is Active</label>
+        </div>
+        <div class="col-md-6 d-flex" style="margin-top:42px">
+            <button type="submit" class="btn btn-primary  me-2" style="height:45px;">Submit</button>
+            <button type="button" class="btn btn-secondary" style="height:45px;" id="btnReset">Reset</button>
+        </div>
+    </div>
+</form>
+<div>
+    <a asp-action="AdmissionTypeList" asp-controller="Master">Get List</a>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $("#btnReset").on("click",function(){
+            $("#myForm")[0].reset();//reset all the fields
+        })
+    </script>
+}
