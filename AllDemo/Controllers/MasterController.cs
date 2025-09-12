@@ -1,9 +1,14 @@
-﻿using AllDemo.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AllDemo.Data;
 using AllDemo.Helper.Log;
 using AllDemo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MimeKit.Tnef;
 
 namespace AllDemo.Controllers
 {
@@ -17,6 +22,7 @@ namespace AllDemo.Controllers
             _appDbContext = appDbContext;
             _errorLog = errorLog;
         }
+        #region start Admission type
         [HttpGet]
         public async Task<IActionResult> GetAdmissionType()
         {
@@ -116,5 +122,105 @@ namespace AllDemo.Controllers
             }
             return RedirectToAction("AdmissionTypeList");
         }
+        #endregion
+        #region start academic year
+
+        [HttpGet("AcademicYears")]
+        public IActionResult GetAcademicYear()
+        {
+            List<AcademicYearModel> listAcademicYearModel = new List<AcademicYearModel>();
+            listAcademicYearModel = _appDbContext.AcademicYears.ToList();
+            return View(listAcademicYearModel);
+        }
+
+        [HttpGet("SaveAcademicYear")]
+        public IActionResult InsertAcademicYear()
+        {
+            return View();
+        }
+
+        [HttpPost("SaveAcademicYear")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InsertAcademicYear(AcademicYearModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            try
+            {
+                var admissionType =
+                    await _appDbContext.AcademicYears.FirstOrDefaultAsync(m =>
+                        m.Year_Name.ToLower() == model.Year_Name.ToLower());
+                if (admissionType != null)
+                {
+                    ModelState.AddModelError("",
+                        "Academic Year " + model.Year_Name + " already exists! please change Academic Year");
+                    return View(model);
+                }
+                else
+                {
+                    await _appDbContext.AcademicYears.AddAsync(model);
+                    await _appDbContext.SaveChangesAsync();
+                    TempData["Success"] = "Academic Year("+model.Year_Name+") Save Successfully";
+                    //clear the input field
+                    ModelState.Clear();
+                    return View(new AcademicYearModel());
+                }
+            }catch (Exception ex)
+            {
+                _errorLog.WriteErrorLog(ex, "Error Occur: Error generate at InsertAcademicYear()");
+                ModelState.AddModelError("","Academic Year ("+model.Year_Name+") Save failed !");
+                return View();
+            }
+        }
+
+        [HttpGet("EditAcademicYear")]
+        public async Task<IActionResult> ModifyAcademicYear(int id)
+        {
+            var academicYear = await _appDbContext.AcademicYears.FindAsync(id);
+            if (academicYear == null)
+            {
+                TempData["FetchFailedAcademicYear"] = "Academic Year does not exists";
+                return View("GetAcademicYear");
+            }
+            else
+            {
+                var model = new AcademicYearModel()
+                {
+                    Year_Id = academicYear.Year_Id,
+                    Year_Name = academicYear.Year_Name,
+                    Start_Date = academicYear.Start_Date,
+                    End_Date = academicYear.End_Date
+                };
+                return View(model);
+            }
+        }
+
+        [HttpPost("EditAcademicYear")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ModifyAcademicYear(int id, AcademicYearModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var academicYear = await _appDbContext.AcademicYears.FirstOrDefaultAsync(m => m.Year_Id == model.Year_Id);
+            if (academicYear == null)
+            {
+                TempData["AcademicYearFindFailed"] = "Record are not match!";
+                return View("ModifyAcademicYear", model);
+            }
+
+            academicYear.Year_Name = model.Year_Name;
+            academicYear.Start_Date = model.Start_Date;
+            academicYear.End_Date = model.End_Date;
+            _appDbContext.Update(academicYear);
+            _appDbContext.SaveChanges();
+            TempData["AcademicYearChangeSuccess"] = "Academic Year("+model.Year_Name+") Changes Successfully";
+            return RedirectToAction("GetAcademicYear");
+        }
+        #endregion
+
+
     }
 }

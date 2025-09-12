@@ -1,0 +1,41 @@
+﻿@model AcademicYearModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Edit Academic Year";
+    string failed= TempData["AcademicYearFindFailed"] as string;
+}
+<h3>@ViewData["Title"]</h3>
+<a asp-action="GetAcademicYear" asp-controller="Master">Academic Year List</a>
+@if (!string.IsNullOrWhiteSpace(failed))
+{
+    <div class="display-message col-md-6 card-header text-danger text-center">
+        <h6 class="mb-0">@Html.Encode(failed) </h6>
+    </div>
+}
+<hr />
+<form method="post" asp-action="ModifyAcademicYear" asp-controller="Master">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <input type="hidden" asp-for="Year_Id"></input>
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label asp-for="Year_Name" class="form-label fw-bold"></label> *
+            <input asp-for="Year_Name" class="form-control" autocomplete="off"></input>
+            <span asp-validation-for="Year_Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Start_Date" class="form-label fw-bold"></label> *
+            <input type="date" asp-for="Start_Date" class="form-control" autocomplete="off"></input>
+            <span asp-validation-for="Start_Date" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="End_Date" class="form-label fw-bold"></label> *
+            <input type="date" asp-for="End_Date" class="form-control" autocomplete="off"></input>
+            <span asp-validation-for="End_Date" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 d-flex" style="margin-top:42px">
+            <button type="submit" class="btn btn-primary  me-2" style="height:45px;">Edit</button>
+            @* <button type="button" class="btn btn-secondary" style="height:45px;" id="btnReset">Cancel</button> *@
+        </div>
+    </div>
+</form>

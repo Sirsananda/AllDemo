@@ -12,7 +12,7 @@ namespace AllDemo.Data
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<RoleModel> RoleModels { get; set; }
         public DbSet<AdmissionTypeModel> AdmissionTypes { get; set; }
-
+        public DbSet<AcademicYearModel> AcademicYears { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

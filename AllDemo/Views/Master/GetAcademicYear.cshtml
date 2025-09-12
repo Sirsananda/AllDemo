@@ -1,0 +1,54 @@
+﻿@model List<AcademicYearModel>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Academic Year List";
+    string fetchFailedAcademicYear= TempData["FetchFailedAcademicYear"] as string;
+    string updateAcademicYearSuccess = TempData["AcademicYearChangeSuccess"] as string;
+}
+<h3>@ViewData["Title"]</h3>
+<a asp-action="InsertAcademicYear" asp-controller="Master">Create</a>
+@if (!string.IsNullOrEmpty(fetchFailedAcademicYear))
+{
+    <div class="display-message col-md-6 card-header text-danger text-center">
+        <h6 class="mb-0">@Html.Encode(fetchFailedAcademicYear)</h6>
+    </div>
+}
+@if (!string.IsNullOrEmpty(updateAcademicYearSuccess))
+{
+    <div class="display-message col-md-6 card-header text-success r text-center">
+        <h6 class="mb-0">@Html.Encode(updateAcademicYearSuccess)</h6>
+    </div>
+}
+<hr />
+@if (Model != null && Model.Any())
+{
+    <h3>All Academic Years</h3>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Year Name</th>
+                <th>Year Start</th>
+                <th>Year End</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.Year_Name</td>
+                    <td>@role.Start_Date</td>
+                    <td>@role.End_Date</td>
+                    <td>
+                        <a asp-action="ModifyAcademicYear" asp-controller="Master" asp-route-id="@role.Year_Id" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p class="text-muted">No Academic Year Found</p>
+}
