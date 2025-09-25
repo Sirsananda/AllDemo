@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatBot App</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>ChatBot Application</h2>
+    <div id="chat" style="border:1px solid #ccc; padding:10px; width:400px; height:300px; overflow-y:auto;"></div>
+
+    <input id="userInput" placeholder="Enter your name" />
+    <input id="messageInput" placeholder="Type a message" />
+    <button id="sendBtn">Send</button>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $("#sendBtn").click(function () {
+            var user = $("#userInput").val();
+            var message = $("#messageInput").val();
+
+            if (user === "" || message === "") {
+                alert("Please enter your name and message!");
+                return;
+            }
+            // Append user message
+            $("#chat").append("<div><b>" + user + ":</b> " + message + "</div>");
+            $.ajax({
+                url: "/ChatBot/SendMessage",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ user: user, message: message }),
+                success: function (response) {
+                    $("#chat").append("<div><b>" + response.Bot + ":</b> " + response.BotMessage + "</div>");
+                    $("#messageInput").val("");
+                    $("#chat").scrollTop($("#chat")[0].scrollHeight);
+                }
+                
+            });
+        });
+    </script>
+</body>
+</html>

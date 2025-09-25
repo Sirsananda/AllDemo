@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSignalR(); // for the chat bot application
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ErrorLog>();
 builder.Services.AddScoped<OTPService>();

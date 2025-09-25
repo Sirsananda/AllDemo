@@ -82,3 +82,8 @@ await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
 FFmpeg.SetExecutablesPath(Path.Combine(Path.GetTempPath(),"FFmpeg"));// Xabe sets this internally too
 
 3. check the page Video/Downloader.cshtml page. 
+
+***************************************Chat BOT application using Microsoft.AspNetCore.SignalR *********************************
+1. install Microsoft.AspNetCore.SignalR (1.2.0)
+2. Program.cs
+	builder.Services.AddSignalR(); // add service for chat bot
