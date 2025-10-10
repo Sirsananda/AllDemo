@@ -1,0 +1,70 @@
+﻿@model SemesterViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Semester";
+    string semesterSuccess = TempData["SemesterSuccess"] as string;
+}
+<h3>@ViewData["Title"]</h3>
+<a asp-action="GetSemesterList" asp-controller="Master">Academic Year List</a>
+<form method="post" asp-action="CreateSemester" asp-controller="Master">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    @if (!string.IsNullOrEmpty(semesterSuccess))
+    {
+        <div class="display-message col-md-6 card-header text-success text-center">
+            <h6 class="mb-0">@Html.Encode(semesterSuccess) </h6>
+        </div>
+    }
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label asp-for="Academic_Year_id" class="form-label fw-bold"></label> *
+            <select asp-for="Academic_Year_id" asp-items="@(new SelectList(Model.AcademicYears, "Year_Id", "Year_Name"))" class="form-select">
+                <option value="">-- Select Academic Year --</option>
+            </select>
+            <span asp-validation-for="Academic_Year_id" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="SemesterName" class="form-label fw-bold"></label> *
+            <input asp-for="SemesterName" class="form-control" autocomplete="off" />
+            <span asp-validation-for="SemesterName" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="StartDate" class="form-label fw-bold"></label>
+            <input type="date" asp-for="StartDate" class="form-control" autocomplete="off" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="EndDate" class="form-label fw-bold"></label>
+            <input type="date" asp-for="EndDate" class="form-control" autocomplete="off" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 d-flex" style="margin-top:42px">
+            <button type="submit" class="btn btn-primary  me-2" style="height:45px;">Save</button>
+            <button type="button" class="btn btn-secondary" style="height:45px;" id="btnReset">Reset</button>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+           $("#StartDate, #EndDate").on('change',function(e){
+               const sdate=new Date($("#StartDate").val());
+               const edate=new Date($("#EndDate").val());
+               if(edate !=null){
+                    if(sdate > edate){
+                   alert('Start Date should be less than End Date!')
+                    e.preventDefault();
+                   $("#EndDate").val("");
+                   }
+               }
+           });
+
+           $("#btnReset").on('click',function(){
+               $("#Academic_Year_id option:first").prop('selected',true);
+               $("#SemesterName").val('');
+               $("#StartDate").val('');
+               $("#EndDate").val('');
+           })
+        });
+    </script>
+}

@@ -23,5 +23,9 @@ namespace AllDemo.Models
         [Required(ErrorMessage = "Choose End Date")]
         [Display(Name = "End Date")]
         public DateOnly? End_Date { get; set; }
+
+        // Navigation Property for Semester table to make Year_Id as FK
+        public ICollection<SemesterModel> Semesters { get; set; } =
+            new List<SemesterModel>(); //this is used because in semester table i have use the Year_Id as foreign key
     }
 }

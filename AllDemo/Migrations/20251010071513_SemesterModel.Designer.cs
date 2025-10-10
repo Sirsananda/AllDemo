@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AllDemo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250905110741_AddAcademicYearTable")]
-    partial class AddAcademicYearTable
+    [Migration("20251010071513_SemesterModel")]
+    partial class SemesterModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,10 +33,12 @@ namespace AllDemo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Year_Id"));
 
-                    b.Property<DateOnly>("End_Date")
+                    b.Property<DateOnly?>("End_Date")
+                        .IsRequired()
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("Start_Date")
+                    b.Property<DateOnly?>("Start_Date")
+                        .IsRequired()
                         .HasColumnType("date");
 
                     b.Property<string>("Year_Name")
@@ -90,6 +92,34 @@ namespace AllDemo.Migrations
                     b.ToTable("tblRole");
                 });
 
+            modelBuilder.Entity("AllDemo.Models.SemesterModel", b =>
+                {
+                    b.Property<int>("SemesterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SemesterId"));
+
+                    b.Property<DateOnly?>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("SemesterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly?>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Year_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("SemesterId");
+
+                    b.HasIndex("Year_Id");
+
+                    b.ToTable("tblSemester");
+                });
+
             modelBuilder.Entity("AllDemo.Models.UserModel", b =>
                 {
                     b.Property<int>("UserId")
@@ -119,6 +149,22 @@ namespace AllDemo.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("tblUsers");
+                });
+
+            modelBuilder.Entity("AllDemo.Models.SemesterModel", b =>
+                {
+                    b.HasOne("AllDemo.Models.AcademicYearModel", "AcademicYear")
+                        .WithMany("Semesters")
+                        .HasForeignKey("Year_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AcademicYear");
+                });
+
+            modelBuilder.Entity("AllDemo.Models.AcademicYearModel", b =>
+                {
+                    b.Navigation("Semesters");
                 });
 #pragma warning restore 612, 618
         }

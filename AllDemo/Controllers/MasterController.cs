@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using AllDemo.Data;
 using AllDemo.Helper.Log;
 using AllDemo.Models;
+using AllDemo.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using MimeKit.Tnef;
 
 namespace AllDemo.Controllers
@@ -220,7 +222,52 @@ namespace AllDemo.Controllers
             return RedirectToAction("GetAcademicYear");
         }
         #endregion
+        #region CRUD Semester
+        [HttpGet("Semesters")]
+        public IActionResult GetSemesterList()
+        {
+            List<SemesterModel> lstModel=new List<SemesterModel>();
+            lstModel=_appDbContext.Semesters.ToList();
+            return View(lstModel);
+        }
+        [HttpGet("CreateSemester")]
+        public IActionResult CreateSemester()
+        {
+            SemesterViewModel semesterViewModel = new SemesterViewModel();
+            semesterViewModel.AcademicYears = _appDbContext.AcademicYears.ToList();
+            return View(semesterViewModel);
+        }
+        [HttpPost("CreateSemester")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateSemester(SemesterViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            var semester = await _appDbContext.Semesters.FirstOrDefaultAsync(s =>
+                s.SemesterName.ToLower()==model.SemesterName.ToLower() &&
+                s.Year_Id == model.Academic_Year_id);
+            if (semester != null)
+            {
+                ModelState.AddModelError("", "Semester Name Already Exists !");
+                return View("CreateSemester", model);
+            }
+            else
+            {
+                semester = new SemesterModel
+                {
+                    SemesterName = model.SemesterName,
+                    Year_Id = model.Academic_Year_id??0,
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate
+                };
+                await _appDbContext.Semesters.AddAsync(semester);
+                await _appDbContext.SaveChangesAsync();
+                TempData["SemesterSuccess"] = "Semester Added Successfully";
+            }
 
+            return View("CreateSemester", model);
+        }
+        #endregion
 
     }
 }

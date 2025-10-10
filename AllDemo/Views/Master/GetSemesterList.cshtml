@@ -1,0 +1,40 @@
+﻿@model List<SemesterModel>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Semester List";
+}
+<h3>@ViewData["Title"]</h3>
+<a asp-action="CreateSemester" asp-controller="Master">Create</a>
+@if(Model != null && Model.Any())
+{
+    <h3>All Semester List</h3>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Academic Year</th>
+                <th>Semester Name</th>
+                <th>Year Start</th>
+                <th>Year End</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var academicyearItem in Model)
+            {
+                <tr>
+                    <td>@academicyearItem.Year_Id</td>
+                    <td>@academicyearItem.SemesterName</td>
+                    <td>@academicyearItem.StartDate</td>
+                    <td>@academicyearItem.EndDate</td>
+                    <td>
+                        <a asp-action="ModifyAcademicYear" asp-controller="Master" asp-route-id="@academicyearItem.Year_Id" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">No Semester Found</p>
+}
