@@ -226,8 +226,9 @@ namespace AllDemo.Controllers
         [HttpGet("Semesters")]
         public IActionResult GetSemesterList()
         {
-            List<SemesterModel> lstModel=new List<SemesterModel>();
-            lstModel=_appDbContext.Semesters.ToList();
+            List<SemesterModel> lstModel = _appDbContext.Semesters.Include(s => s.AcademicYear).ToList();
+            //List<SemesterModel> lstModel=new List<SemesterModel>();
+            //lstModel=_appDbContext.Semesters.ToList();
             return View(lstModel);
         }
         [HttpGet("CreateSemester")]
@@ -242,14 +243,18 @@ namespace AllDemo.Controllers
         public async Task<IActionResult> CreateSemester(SemesterViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                model.AcademicYears =await _appDbContext.AcademicYears.ToListAsync();
                 return View(model);
+            }
             var semester = await _appDbContext.Semesters.FirstOrDefaultAsync(s =>
                 s.SemesterName.ToLower()==model.SemesterName.ToLower() &&
                 s.Year_Id == model.Academic_Year_id);
             if (semester != null)
             {
                 ModelState.AddModelError("", "Semester Name Already Exists !");
-                return View("CreateSemester", model);
+                model.AcademicYears = await _appDbContext.AcademicYears.ToListAsync();
+                return View(model);
             }
             else
             {

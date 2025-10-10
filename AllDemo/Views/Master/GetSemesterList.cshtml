@@ -19,15 +19,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var academicyearItem in Model)
+            @foreach (var semesterItem in Model)
             {
                 <tr>
-                    <td>@academicyearItem.Year_Id</td>
-                    <td>@academicyearItem.SemesterName</td>
-                    <td>@academicyearItem.StartDate</td>
-                    <td>@academicyearItem.EndDate</td>
+                    <td>@semesterItem.AcademicYear.Year_Name</td>
+                    <td>@semesterItem.SemesterName</td>
+                    <td>@semesterItem.StartDate</td>
+                    <td>@semesterItem.EndDate</td>
                     <td>
-                        <a asp-action="ModifyAcademicYear" asp-controller="Master" asp-route-id="@academicyearItem.Year_Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="ModifyAcademicYear" asp-controller="Master" asp-route-id="@semesterItem.Year_Id" class="btn btn-warning btn-sm">Edit</a>
                     </td>
                 </tr>
             }
