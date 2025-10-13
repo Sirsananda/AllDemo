@@ -6,6 +6,7 @@ using AllDemo.Data;
 using AllDemo.Helper.Log;
 using AllDemo.Models;
 using AllDemo.ViewModels;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -247,6 +248,19 @@ namespace AllDemo.Controllers
                 model.AcademicYears =await _appDbContext.AcademicYears.ToListAsync();
                 return View(model);
             }
+            // 🧹 Step 1: Sanitize user input (before database checks)
+            var sanitizer = new HtmlSanitizer();
+            model.SemesterName = sanitizer.Sanitize(model.SemesterName ?? string.Empty);
+
+            // Step 2: Handle sanitization result gracefully (don’t throw or mark invalid)
+            if (string.IsNullOrWhiteSpace(model.SemesterName))
+            {
+                // If it becomes empty after sanitization, assign a fallback or just return
+                ModelState.AddModelError("SemesterName", "Invalid or empty semester name.");
+                model.AcademicYears = await _appDbContext.AcademicYears.ToListAsync();
+                return View(model);
+            }
+
             var semester = await _appDbContext.Semesters.FirstOrDefaultAsync(s =>
                 s.SemesterName.ToLower()==model.SemesterName.ToLower() &&
                 s.Year_Id == model.Academic_Year_id);
@@ -268,9 +282,77 @@ namespace AllDemo.Controllers
                 await _appDbContext.Semesters.AddAsync(semester);
                 await _appDbContext.SaveChangesAsync();
                 TempData["SemesterSuccess"] = "Semester Added Successfully";
+                model.AcademicYears = await _appDbContext.AcademicYears.ToListAsync();
+                return View(model);
+            }
+        }
+
+        [HttpGet("ModifySemester")]
+        public async Task<IActionResult> EditSemester(int? id)
+        {
+            SemesterViewModel model = new SemesterViewModel();
+            if (id is not null and not 0)
+            {
+                var semester =await _appDbContext.Semesters.FindAsync(id);
+                if (semester != null)
+                {
+                    model.SemesterId = semester.SemesterId;
+                    model.Academic_Year_id = semester.Year_Id;
+                    model.SemesterName = semester.SemesterName;
+                    model.StartDate = semester.StartDate;
+                    model.EndDate = semester.EndDate;
+                    model.AcademicYears = await _appDbContext.AcademicYears.ToListAsync();
+                    return View(model);
+                }
+                else
+                {
+                    TempData["SemesterDoesNotFind"] = "Semester Does Not Exists !";
+                    return RedirectToAction("GetSemesterList");
+                }
+            }
+            else
+            {
+                TempData["SemesterDoesNotFind"] = "SemesterId Does Not Match!";
+                return RedirectToAction("GetSemesterList");
+            }
+        }
+
+        [HttpPost("ModifySemester")]
+        public async Task<IActionResult> EditSemester(int? id, SemesterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.AcademicYears = await _appDbContext.AcademicYears.ToListAsync();
+                return View(model);
             }
 
-            return View("CreateSemester", model);
+            var sanitize = new HtmlSanitizer();
+            model.SemesterName = sanitize.Sanitize(model.SemesterName ?? string.Empty);
+            if (string.IsNullOrEmpty(model.SemesterName))
+            {
+                ModelState.AddModelError("SemesterName","Invalid or empty semester name");
+                model.AcademicYears = await _appDbContext.AcademicYears.ToListAsync();
+                return View(model);
+            }
+            var semester = await _appDbContext.Semesters.FirstOrDefaultAsync(s=>s.SemesterId==model.SemesterId);
+            if (semester == null)
+            {
+                ModelState.AddModelError("", "Semester Does not Exists !");
+                model.AcademicYears = await _appDbContext.AcademicYears.ToListAsync();
+                return View(model);
+            }
+            else
+            {
+                semester.SemesterId = model.SemesterId??0;
+                semester.Year_Id = model.Academic_Year_id??0;
+                semester.SemesterName = model.SemesterName;
+                semester.StartDate = model.StartDate;
+                semester.EndDate = model.EndDate;
+                 _appDbContext.Update(semester);
+                await _appDbContext.SaveChangesAsync();
+                TempData["UpdateSemesterSuccess"] = "Semester Updated Successfully";
+                return RedirectToAction("GetSemesterList");
+            }
         }
         #endregion
 

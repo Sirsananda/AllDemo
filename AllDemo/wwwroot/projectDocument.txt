@@ -87,3 +87,16 @@ FFmpeg.SetExecutablesPath(Path.Combine(Path.GetTempPath(),"FFmpeg"));// Xabe set
 1. install Microsoft.AspNetCore.SignalR (1.2.0)
 2. Program.cs
 	builder.Services.AddSignalR(); // add service for chat bot
+
+*********************sanitize the input text field ***************
+	for this i use the nuget package HtmlSanitizer:9.0.886
+	example:
+
+	 var sanitizer = new HtmlSanitizer();
+	 model.Name        = sanitizer.Sanitize(model.Name ?? string.Empty);
+
+	//use the below code in every view pages where post method required for the input type: text
+	@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+“Insert the jQuery validation scripts here, and place them inside the Scripts section of the layout.”

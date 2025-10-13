@@ -2,8 +2,16 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Semester List";
+    string semesterIdDoestNotFind = TempData["SemesterDoesNotFind"] as string;
 }
-<h3>@ViewData["Title"]</h3>
+@{
+    if (!string.IsNullOrEmpty(semesterIdDoestNotFind))
+    {
+        <div class="display-message col-md-6 card-header text-danger text-center">
+            <h6 class="mb-0">@Html.Encode(semesterIdDoestNotFind) </h6>
+        </div>
+    }
+}
 <a asp-action="CreateSemester" asp-controller="Master">Create</a>
 @if(Model != null && Model.Any())
 {
@@ -27,7 +35,7 @@
                     <td>@semesterItem.StartDate</td>
                     <td>@semesterItem.EndDate</td>
                     <td>
-                        <a asp-action="ModifyAcademicYear" asp-controller="Master" asp-route-id="@semesterItem.Year_Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="EditSemester" asp-controller="Master" asp-route-id="@semesterItem.SemesterId" class="btn btn-warning btn-sm">Edit</a>
                     </td>
                 </tr>
             }

@@ -1,18 +1,19 @@
 ﻿@model SemesterViewModel
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Create Semester";
-    string semesterSuccess = TempData["SemesterSuccess"] as string;
+    ViewData["Title"] = "Modify Semester";
+    string updateSemesterMsg = TempData["UpdateSemesterSuccess"] as string;
 }
-<a asp-action="GetSemesterList" asp-controller="Master">Semester List</a>
-<h3>@ViewData["Title"] :</h3>
-<form method="post" asp-action="CreateSemester" asp-controller="Master">
+<a asp-controller="Master" asp-action="GetSemesterList">Semester List</a>
+<h3>Edit Semester :</h3>
+<form method="post" asp-action="EditSemester" asp-controller="Master">
     @Html.AntiForgeryToken()
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-    @if (!string.IsNullOrEmpty(semesterSuccess))
+    <input type="hidden" asp-for="SemesterId"></input>
+    @if (!string.IsNullOrEmpty(updateSemesterMsg))
     {
         <div class="display-message col-md-6 card-header text-success text-center">
-            <h6 class="mb-0">@Html.Encode(semesterSuccess) </h6>
+            <h6 class="mb-0">@Html.Encode(updateSemesterMsg) </h6>
         </div>
     }
     <div class="row g-3">
@@ -39,35 +40,8 @@
             <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
         <div class="col-md-3 d-flex" style="margin-top:42px">
-            <button type="submit" class="btn btn-primary  me-2" style="height:45px;">Save</button>
+            <button type="submit" class="btn btn-primary  me-2" style="height:45px;">Edit</button>
             <button type="button" class="btn btn-secondary" style="height:45px;" id="btnReset">Reset</button>
         </div>
     </div>
 </form>
-@section Scripts {
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-           $("#StartDate, #EndDate").on('change',function(e){
-               const sdate=new Date($("#StartDate").val());
-               const edate=new Date($("#EndDate").val());
-               if(edate !=null){
-                    if(sdate > edate){
-                   alert('Start Date should be less than End Date!')
-                    e.preventDefault();
-                   $("#EndDate").val("");
-                   }
-               }
-           });
-
-           $("#btnReset").on('click',function(){
-               $("#Academic_Year_id option:first").prop('selected',true);
-               $("#SemesterName").val('');
-               $("#StartDate").val('');
-               $("#EndDate").val('');
-           })
-        });
-    </script>
-}
