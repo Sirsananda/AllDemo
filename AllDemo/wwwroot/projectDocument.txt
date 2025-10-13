@@ -100,3 +100,6 @@ FFmpeg.SetExecutablesPath(Path.Combine(Path.GetTempPath(),"FFmpeg"));// Xabe set
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 “Insert the jQuery validation scripts here, and place them inside the Scripts section of the layout.”
+
+also use : nuget
+AngleSharp: 1.3.0
