@@ -20,8 +20,11 @@ builder.Services.AddScoped<EmailService>();
 builder.Services.AddHttpClient();//this service is required to use and configure HttpClient,first use at reCAPTCHA-v2
 builder.Services.AddScoped<GoogleReCaptchaValidator>();
 //Configure EF Core with SQL server
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));
+
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));
+   
+    
 
 builder.Services.AddSession();//added session services to the application
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => //here the cookies services are added
@@ -42,6 +45,27 @@ FFmpeg.SetExecutablesPath(Path.Combine(Path.GetTempPath(),"FFmpeg"));// Xabe set
 
 
 var app = builder.Build();
+
+try
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        db.Database.CanConnect(); // returns true/false
+    }
+}
+catch (Exception ex)
+{
+    // Log the error to a file
+    var logPath = Path.Combine(AppContext.BaseDirectory, "logs");
+    if (!Directory.Exists(logPath))
+        Directory.CreateDirectory(logPath);
+
+    File.AppendAllText(Path.Combine(logPath, "startup_errors.txt"),
+        $"[{DateTime.Now}] {ex.Message}\n{ex.StackTrace}\n\n");
+
+    throw; // rethrow so IIS knows the app failed
+}
 
 app.UseSession();//by use this we are able to add session in out application
 app.UseAuthentication();//authentication are added

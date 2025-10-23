@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace AllDemo.Controllers
@@ -32,8 +33,18 @@ namespace AllDemo.Controllers
         {
             if (!ModelState.IsValid)
                 return View(loginViewModel);
-
+            _errorLog.WriteErrorLog(new Exception("Login method entered"),"Use login()");
+            try
+            {
+                var users = await _dbContext.UserModels.FirstOrDefaultAsync(u => u.UserId == loginViewModel.UserId);
+            }
+            catch (Exception ex)
+            {
+                _errorLog.WriteErrorLog(ex,"error");
+            }
             var user = await _dbContext.UserModels.FirstOrDefaultAsync(u => u.UserId == loginViewModel.UserId);
+            _errorLog.WriteErrorLog(new Exception("did not fetch the user"), "Use login()");
+
             if (user == null)
             {
                 ModelState.AddModelError("", "Invalid Credentials.");

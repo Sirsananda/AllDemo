@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "CK Editor";
+}
+<h3>@ViewData["Title"]</h3>
+<div class="row g-3">
+    <textarea id="editor" name="Description"></textarea>
+</div>
+@section Scripts
+{
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => console.error(error));
+    </script>
+}
+

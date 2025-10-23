@@ -51,6 +51,15 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-action="Index" asp-controller="Admin">Dashboard</a>
                     </li>
+                    <!-- Dropdown Menu:Editor,Copy -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                           CK Editor
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="CKEditor">CK Editor</a></li>
+                        </ul>
+                    </li>
                     <!-- Dropdown Menu:Chat-Bot -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
