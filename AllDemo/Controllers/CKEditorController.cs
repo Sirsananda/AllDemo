@@ -8,5 +8,10 @@ namespace AllDemo.Controllers
         {
             return View();
         }
+
+        public IActionResult CopyText()
+        {
+            return View();
+        }
     }
 }

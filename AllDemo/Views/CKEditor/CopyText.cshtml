@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Copy Text";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    p.nocopy { /* Disable text selection */
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    #copyBtn {
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        #copyBtn:hover {
+            background-color: #0056b3;
+        }
+</style>
+<div class="row g-3">
+    <p id="secureText" class="nocopy">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur lacus non justo ultrices, ut porta risus consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce a sagittis nulla. Integer accumsan, nisl in gravida elementum, turpis ligula dignissim velit, non efficitur est orci vitae nisl. Morbi non urna risus. Quisque in tellus quis justo gravida dignissim nec a justo. Mauris vulputate diam eu mi luctus tempor. Nulla facilisi. Suspendisse ut nunc odio. Vivamus finibus diam in bibendum tempor. Pellentesque in diam quis lectus cursus consequat non nec purus.
+        Vestibulum malesuada finibus nulla a suscipit. Nulla facilisi. Aliquam erat volutpat. Duis efficitur, nibh ac commodo condimentum, sem sapien dapibus velit, ut pulvinar sem elit nec lectus. Etiam efficitur enim nec massa feugiat, ut imperdiet nisl tincidunt. Ut vitae eros euismod, aliquam lectus at, blandit velit. Vivamus fermentum magna vel dui dictum, nec maximus velit pharetra. Donec mollis libero non risus mattis volutpat. Integer non sapien ac turpis egestas ultricies. Sed porta diam quis viverra finibus. Integer pulvinar, ipsum in tempor sodales, nisi erat ultrices risus, vel suscipit justo magna sit amet neque.
+        Nunc feugiat, risus nec facilisis accumsan, justo turpis mattis eros, et ultrices purus ex nec libero. Praesent in ex vehicula, pulvinar turpis nec, sagittis sapien. Aenean sagittis arcu vel luctus bibendum. Sed elementum lectus eu tortor tempor, nec sodales nunc porttitor. Nulla a nulla id sem ultrices feugiat ut vitae mauris. Phasellus sit amet massa magna. Curabitur congue, mi sed malesuada congue, felis justo rhoncus velit, at euismod justo metus ac justo. Suspendisse tempor, mi vel aliquam consequat, velit lacus blandit enim, id ornare sapien sem in tortor. In aliquam, sapien ut hendrerit venenatis, nulla magna porttitor metus, nec commodo augue mi sed erat.
+
+</div>
+<br />
+<div class="row g-3">
+    <p id="copytext">
+        Praesent sagittis, lorem sit amet ullamcorper facilisis, justo purus mattis enim, vel tempor justo tortor sed ipsum. Vivamus iaculis cursus purus nec eleifend. Etiam sit amet felis orci. Nulla nec nibh et turpis vulputate tincidunt. Sed in risus in ante ultricies gravida. Fusce sit amet purus in mi cursus ultrices. Etiam faucibus, justo at porttitor fringilla, lorem justo pulvinar risus, nec efficitur ex libero nec orci. Maecenas nec felis ut lorem venenatis faucibus nec non purus. Vestibulum condimentum, nibh ac hendrerit tincidunt, erat nulla eleifend ipsum, vel euismod neque felis eu arcu.
+        Ut quis vehicula metus. Nulla commodo finibus ex nec tincidunt. Pellentesque euismod sapien nec metus tempus, a ullamcorper lorem bibendum. Sed tristique est a feugiat cursus. Aenean malesuada egestas eros, vel vulputate mi vulputate id. Integer dignissim mauris ac odio dapibus, ut commodo arcu fermentum. In hac habitasse platea dictumst. Sed in tortor mauris. Aenean interdum, felis eget malesuada fringilla, urna est egestas purus, a varius orci est nec velit. Sed pulvinar cursus justo ut vulputate. Nullam sodales orci ut tincidunt fringilla. Nullam sit amet vestibulum nunc, sit amet tristique purus.
+        Curabitur fringilla diam id sapien efficitur bibendum. In malesuada gravida magna id laoreet. Donec fermentum turpis quis erat faucibus, a egestas erat tempor. Integer consequat, erat ut pretium tempor, nunc orci sagittis libero, eget posuere justo justo sit amet neque. Etiam sodales turpis a sem lobortis, ac efficitur lorem convallis. Proin lacinia, erat ac congue gravida, magna metus cursus justo, vitae elementum ligula velit sit amet lectus. Sed sed magna ligula. Phasellus bibendum blandit metus, vitae pretium eros sodales sed. Cras et turpis fringilla, blandit ligula sit amet, malesuada sem. Fusce vel volutpat est. Etiam iaculis ligula ac risus sodales suscipit.
+    </p>
+    <button id="copyBtn" style="width:68px">Copy</button>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+            $(document).ready(function(){
+            $("#secureText").on("contextmenu",function(e){ // Disable right-click context menu
+                  e.preventDefault();
+                 alert("Copying is disable");
+             })
+           // Prevent copy, cut, and paste events
+        $("#secureText").on("copy cut paste", function (e) {
+            e.preventDefault();
+            alert("Copy/Cut/Paste are disabled on this content!");
+        });
+
+        // Optional: Prevent text selection with mouse
+        $("#secureText").on("selectstart", function (e) {
+            e.preventDefault();
+        });
+
+         // Copy text when button clicked
+            $("#copyBtn").click(function () {
+                // Get text from paragraph
+                var textToCopy = $("#copytext").text();
+
+                // Create temporary element
+                var tempInput = $("<textarea>");
+                $("body").append(tempInput);
+                tempInput.val(textToCopy).select();
+                document.execCommand("copy"); // Copy to clipboard
+                tempInput.remove();
+
+                // Notify user
+                alert("Text copied successfully!");
+            });
+
+            })
+    </script>
+}

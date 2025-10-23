@@ -1,0 +1,48 @@
+
+-------------------------ErrorLog Start------------------- as on 12:03:02
+Webpage Name: /
+Custom Message :Use login()
+Message :Login method entered
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 12:03:03
+Webpage Name: /
+Custom Message :Use login()
+Message :did not fetch the user
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 12:11:31
+Webpage Name: /
+Custom Message :Use login()
+Message :Login method entered
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 12:11:32
+Webpage Name: /
+Custom Message :Use login()
+Message :did not fetch the user
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 12:29:49
+Webpage Name: /
+Custom Message :Use login()
+Message :Login method entered
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 12:29:50
+Webpage Name: /
+Custom Message :Use login()
+Message :did not fetch the user
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
