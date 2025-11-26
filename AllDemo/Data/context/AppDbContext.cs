@@ -1,7 +1,7 @@
 ﻿using AllDemo.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AllDemo.Data
+namespace AllDemo.Data.context
 {
     public class AppDbContext:DbContext
     {

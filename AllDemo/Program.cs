@@ -1,5 +1,5 @@
 using AllDemo.Configuration;
-using AllDemo.Data;
+using AllDemo.Data.context;
 using AllDemo.Helper.Log;
 using AllDemo.Helper.Validator;
 using AllDemo.Services;
@@ -9,6 +9,10 @@ using Xabe.FFmpeg;
 using Xabe.FFmpeg.Downloader;
 
 var builder = WebApplication.CreateBuilder(args);
+//builder.Services.AddHttpsRedirection(options =>
+//{
+//    options.HttpsPort = 7234;
+//});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -46,26 +50,26 @@ FFmpeg.SetExecutablesPath(Path.Combine(Path.GetTempPath(),"FFmpeg"));// Xabe set
 
 var app = builder.Build();
 
-try
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        db.Database.CanConnect(); // returns true/false
-    }
-}
-catch (Exception ex)
-{
-    // Log the error to a file
-    var logPath = Path.Combine(AppContext.BaseDirectory, "logs");
-    if (!Directory.Exists(logPath))
-        Directory.CreateDirectory(logPath);
+//try
+//{
+//    using (var scope = app.Services.CreateScope())
+//    {
+//        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//        db.Database.CanConnect(); // returns true/false
+//    }
+//}
+//catch (Exception ex)
+//{
+//    // Log the error to a file
+//    var logPath = Path.Combine(AppContext.BaseDirectory, "logs");
+//    if (!Directory.Exists(logPath))
+//        Directory.CreateDirectory(logPath);
 
-    File.AppendAllText(Path.Combine(logPath, "startup_errors.txt"),
-        $"[{DateTime.Now}] {ex.Message}\n{ex.StackTrace}\n\n");
+//    File.AppendAllText(Path.Combine(logPath, "startup_errors.txt"),
+//        $"[{DateTime.Now}] {ex.Message}\n{ex.StackTrace}\n\n");
 
-    throw; // rethrow so IIS knows the app failed
-}
+//    throw; // rethrow so IIS knows the app failed
+//}
 
 app.UseSession();//by use this we are able to add session in out application
 app.UseAuthentication();//authentication are added

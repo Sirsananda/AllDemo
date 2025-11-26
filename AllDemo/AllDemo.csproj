@@ -538,6 +538,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Interfaces\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\Repositories\" />
+    <Folder Include="Models\DTOs\" />
+    <Folder Include="Models\Enums\" />
+    <Folder Include="Models\Entities\" />
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Services\Implementations\" />
+    <Folder Include="Services\Mappers\" />
+    <Folder Include="Services\Validators\" />
     <Folder Include="wwwroot\Image-Resizer\" />
   </ItemGroup>
 

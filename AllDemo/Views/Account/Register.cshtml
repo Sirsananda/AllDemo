@@ -47,7 +47,7 @@
                     <div class="card-body p-4">
 
                         <form asp-action="Register" method="post">
-                            @Html.AntiForgeryToken();
+                            @Html.AntiForgeryToken()
                             <div class="mb-3">
                                 <label asp-for="UserName" class="form-label fw-bold"></label>
                                 <input asp-for="UserName" class="form-control"/>

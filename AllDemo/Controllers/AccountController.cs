@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using AllDemo.Data;
 using AllDemo.Helper.Log;
 using AllDemo.Models;
 using AllDemo.ViewModels;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using AllDemo.Data.context;
 
 namespace AllDemo.Controllers
 {
