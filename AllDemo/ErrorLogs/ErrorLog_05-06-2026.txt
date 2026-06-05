@@ -1,0 +1,16 @@
+
+-------------------------ErrorLog Start------------------- as on 11:28:15 AM
+Webpage Name: /
+Custom Message :Use login()
+Message :Login method entered
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
+
+-------------------------ErrorLog Start------------------- as on 11:28:15 AM
+Webpage Name: /
+Custom Message :Use login()
+Message :did not fetch the user
+ErrorLog Details: 
+-------------------------ErrorLog End-------------------
+
